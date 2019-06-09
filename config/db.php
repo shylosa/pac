@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=pacbase',
+    'dsn' => 'mysql:host=pac_mysql;dbname=pacbase',
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8',

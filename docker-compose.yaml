@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  pac_nginx:
+    build: ./docker/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/conf:/etc/nginx/conf.d
+      - .:/var/www/html
+      - ./docker/nginx/log/:/var/log/nginx
+      - /tmp:/tmp
+    links:
+      - pac_php
+
+  pac_php:
+    build: ./docker/php
+    volumes:
+      - .:/var/www/html
+      - /tmp:/tmp
+      - ~/.composer:/var/www/.composer
+    links:
+      - pac_mysql
+
+  pac_mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pacbase
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    volumes:
+      - pac_mysql_data:/var/lib/mysql
+
+  pac_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pac_phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8081:80
+    volumes:
+      - /sessions
+
+volumes:
+  pac_mysql_data:
