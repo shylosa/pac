@@ -18,6 +18,7 @@ class m190606_191200_create_book_table extends Migration
             'image' => $this->string(),
             'description' => $this->string(),
             'date_publishing' => $this->string(),
+            'category_id'=>$this->string(),
         ]);
     }
 

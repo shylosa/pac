@@ -41,4 +41,10 @@ class Category extends \yii\db\ActiveRecord
             'category' => 'Category',
         ];
     }
+
+    public function getBooks()
+    {
+        return $this->hasMany(Book::class, ['id' => 'book_id'])
+            ->viaTable('book_category', ['category_id' => 'id']);
+    }
 }

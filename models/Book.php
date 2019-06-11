@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "book".
@@ -74,4 +75,35 @@ class Book extends \yii\db\ActiveRecord
         return parent::beforeDelete();
     }
 
+    public function getCategories()
+    {
+        return $this->hasMany(Category::class, ['id' => 'category_id'])
+            ->viaTable('book_category', ['book_id' => 'id']);
+    }
+
+    public function getSelectedCategories()
+    {
+        $selectedIds = $this->getCategories()->select('id')->asArray()->all();
+
+        return ArrayHelper::getColumn($selectedIds, 'id');
+    }
+
+    public function saveCategories($categories)
+    {
+        if (is_array($categories)){
+
+            $this->clearCurrentCategories();
+
+            foreach ($categories as $category_id)
+            {
+                $category = Category::findOne($category_id);
+                $this->link('categories', $category);
+            }
+        }
+    }
+
+    public function clearCurrentCategories()
+    {
+        BookCategory::deleteAll(['book_id'=>$this->id]);
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -8,11 +9,12 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="book-form">
+<div class="categories-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+    <?= Html::dropDownList('categories', $selectedCategories, $categories,
+        ['class'=>'form-control', 'multiple'=>true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Submit', ['class' => 'btn btn-success']) ?>
