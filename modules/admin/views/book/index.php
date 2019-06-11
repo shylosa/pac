@@ -1,7 +1,9 @@
 <?php
 
+use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BookSearch */
@@ -24,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => SerialColumn::class],
 
             'title',
             [
@@ -32,6 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Image',
                 'value' => static function($data){
                     return Html::img($data->getImage(),['width'=>120]);
+                }
+            ],
+            [
+                'format' => 'html',
+                'label' => 'Genre',
+                'value' => static function($data){
+                    return Html::ul($data->getSelectedCategories()); //Сделать вывод категорий не цифр, а значений
                 }
             ],
             'description',

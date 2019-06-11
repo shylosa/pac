@@ -161,6 +161,7 @@ class BookController extends Controller
         {
             $categories = Yii::$app->request->post('categories');
             $book->saveCategories($categories);
+
             return $this->redirect(['view', 'id'=>$book->id]);
         }
 

@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -9,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="categories-form">
+<div class="books-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
