@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Set Image', ['set-image', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Set Genres', ['set-categories', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Set Categories', ['set-categories', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Set Authors', ['set-authors', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

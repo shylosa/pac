@@ -49,4 +49,19 @@ class Author extends \yii\db\ActiveRecord
             'date_birth' => 'Date Birth',
         ];
     }
+
+
+    public function getBooks()
+    {
+        return $this->hasMany(Book::class, ['id' => 'book_id'])
+            ->viaTable('book_author', ['author_id' => 'id']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor(): string
+    {
+        return $this->surename . ' ' . $this->name . ' ' . $this->patronimic;
+    }
 }

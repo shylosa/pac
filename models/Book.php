@@ -106,4 +106,36 @@ class Book extends \yii\db\ActiveRecord
     {
         BookCategory::deleteAll(['book_id'=>$this->id]);
     }
+
+    public function getAuthors()
+    {
+        return $this->hasMany(Author::class, ['id' => 'author_id'])
+            ->viaTable('book_author', ['book_id' => 'id']);
+    }
+
+    public function getSelectedAuthors()
+    {
+        $selectedIds = $this->getAuthors()->select('id')->asArray()->all();
+
+        return ArrayHelper::getColumn($selectedIds, 'id');
+    }
+
+    public function saveAuthors($authors)
+    {
+        if (is_array($authors)){
+
+            $this->clearCurrentAuthors();
+
+            foreach ($authors as $author_id)
+            {
+                $author = Author::findOne($author_id);
+                $this->link('authors', $author);
+            }
+        }
+    }
+
+    public function clearCurrentAuthors()
+    {
+        BookAuthor::deleteAll(['author_id'=>$this->id]);
+    }
 }

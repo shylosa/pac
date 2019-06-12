@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Author;
 use app\models\Category;
 use app\models\ImageUpload;
 use Yii;
@@ -168,6 +169,26 @@ class BookController extends Controller
         return $this->render('categories', [
             'selectedCategories'=>$selectedCategories,
             'categories'=>$categories
+        ]);
+    }
+
+    public function actionSetAuthors($id)
+    {
+        $book = $this->findModel($id);
+        $selectedAuthors = $book->getSelectedAuthors();
+        $authors = ArrayHelper::map(Author::find()->all(), 'id', 'author');
+
+        if(Yii::$app->request->isPost)
+        {
+            $authors = Yii::$app->request->post('authors');
+            $book->saveAuthors($authors);
+
+            return $this->redirect(['view', 'id'=>$book->id]);
+        }
+
+        return $this->render('authors', [
+            'selectedAuthors'=>$selectedAuthors,
+            'authors'=>$authors
         ]);
     }
 }

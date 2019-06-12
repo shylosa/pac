@@ -3,7 +3,6 @@
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BookSearch */
@@ -38,9 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'format' => 'html',
-                'label' => 'Genre',
+                'label' => 'Category',
                 'value' => static function($data){
-                    return Html::ul($data->getSelectedCategories()); //Сделать вывод категорий не цифр, а значений
+                    $res =[];
+                      foreach ($data->categories as $cat){
+                         $res[] = $cat->getCategory();
+                      }
+                    return Html::ul($res);
                 }
             ],
             'description',
