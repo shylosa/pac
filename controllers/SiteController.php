@@ -2,8 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Author;
+use app\models\Book;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -19,7 +22,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -30,7 +33,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -124,5 +127,31 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Displays single book page.
+     *
+     * @return string
+     */
+    public function actionView($id)
+    {
+        $book = Book::findOne($id);
+        $title = $book->getTitle();
+        $image = $book->getImage();
+        $description = $book->getDescription();
+        $datePublishing = $book->getDatePublishing();
+
+        $categories = $book->getBookCategories();
+        $authors = $book->getBookAuthors();
+
+        return $this->render('single',[
+            'title'=>$title,
+            'authors'=>$authors,
+            'image'=>$image,
+            'description'=>$description,
+            'datePublishing'=>$datePublishing,
+            'categories'=>$categories
+        ]);
     }
 }

@@ -2,14 +2,14 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Библиотека';
+$this->title = 'Библиотека PAC';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Библиотека</h1>
+        <h1>Библиотека PAC</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Добро пожаловать в нашу библиотеку!</p>
 
         <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>

@@ -102,6 +102,17 @@ class Book extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Return current book categories
+     *
+     * @return array
+     */
+    public function getBookCategories()
+    {
+        return ArrayHelper::getColumn($this->getCategories()
+                            ->select('category')->asArray()->all(),'category');
+    }
+
     public function clearCurrentCategories()
     {
         BookCategory::deleteAll(['book_id'=>$this->id]);
@@ -134,8 +145,49 @@ class Book extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Return current book authors
+     *
+     * @return array
+     */
+    public function getBookAuthors()
+    {
+        $bookAuthors = $this->getAuthors()->select(['surename',
+                                                    'name',
+                                                    'patronimic'])->asArray()->all();
+        $fullName = [];
+        foreach ($bookAuthors as $bookAuthor){
+            $fullName[] = $bookAuthor['surename'] .' '. $bookAuthor['name'] .' '. $bookAuthor['patronimic'];
+        };
+        return $fullName;
+    }
+
     public function clearCurrentAuthors()
     {
         BookAuthor::deleteAll(['author_id'=>$this->id]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDatePublishing(): string
+    {
+        return $this->date_publishing;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }
