@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Author;
 use app\models\Book;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -64,7 +65,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Book::find();
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 3]);
+        $books = $query
+            ->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('index', [
+            'books' => $books,
+            'pages' => $pages
+        ]);
+
+
     }
 
     /**
@@ -154,4 +168,5 @@ class SiteController extends Controller
             'categories'=>$categories
         ]);
     }
+
 }

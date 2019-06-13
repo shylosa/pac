@@ -17,9 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Set Image', ['set-image', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Set Categories', ['set-categories', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Set Authors', ['set-authors', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -34,10 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'image',
+            [
+                'format' => 'html',
+                'label' => 'Image',
+                'value' => static function($data){
+                    return Html::img($data->getImage(),['width'=>120]);
+                }
+            ],
+            [   'format' =>'html',
+                'label' => 'Categories',
+                'value' => static function ($model){
+                    return Html::ul($model->getBookCategories());
+              }
+            ],
+            [   'format' =>'html',
+                'label' => 'Author',
+                'value' => static function ($model){
+                    return Html::ul($model->getBookAuthors());
+                }
+            ],
             'description',
             'date_publishing',
-        ],
+        ]
     ]) ?>
 
 </div>

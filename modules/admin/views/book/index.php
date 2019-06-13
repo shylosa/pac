@@ -35,18 +35,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($data->getImage(),['width'=>120]);
                 }
             ],
-            [
-                'format' => 'html',
-                'label' => 'Category',
-                'value' => static function($data){
-                    $res =[];
-                      foreach ($data->categories as $cat){
-                         $res[] = $cat->getCategory();
-                      }
-                    return Html::ul($res);
-                }
+            [   'format' =>'html',
+                  'label' => 'Categories',
+                  'value' => static function ($model){
+                      return Html::ul($model->getBookCategories());
+                  }
+              ],
+              [   'format' =>'html',
+                  'label' => 'Author',
+                  'value' => static function ($model){
+                      return Html::ul($model->getBookAuthors());
+                  }
+              ],
+            [ 'format' => 'html',
+                'label' => 'Description',
+              'value' => static function($data){
+                    return Html::tag('p',
+                        \yii\helpers\StringHelper::truncate($data->description,256, '...'));
+              }
             ],
-            'description',
             'date_publishing',
 
             ['class' => 'yii\grid\ActionColumn'],

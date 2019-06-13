@@ -34,7 +34,7 @@ class Book extends \yii\db\ActiveRecord
             [['date_publishing'], 'safe'],
             [['date_publishing'], 'date', 'format' => 'yyyy'],
             [['date_publishing'], 'default', 'value' => date('Y')],
-            [['title', 'image', 'description'], 'string', 'max' => 255],
+            [['title', 'image', 'description'], 'string', 'max' => 2000],
         ];
     }
 

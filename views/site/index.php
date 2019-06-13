@@ -2,52 +2,63 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Url;
+use yii\widgets\LinkPager;
+
 $this->title = 'Библиотека PAC';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Библиотека PAC</h1>
+<!--  <div class="jumbotron">-->
+<!--    <h1>Библиотека PAC</h1>-->
+<!--    <p class="lead">Добро пожаловать в нашу библиотеку!</p>-->
+<!--  </div>-->
 
-        <p class="lead">Добро пожаловать в нашу библиотеку!</p>
+  <div class="main-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+            <?php foreach($books as $book):?>
+            <article class="post">
+              <div class="post-content">
+                <header class="entry-header text-center text-uppercase">
+                  <h1 class="entry-title"><a href="<?= Url::toRoute(['site/view', 'id'=>$book->id]);?>">
+                          <?= $book->title?></a></h1>
+                </header>
+                <div class="post-thumb">
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+                  <h2>
+                      <?php foreach( $book->getBookAuthors() as $author ): ?>
+                        <li>
+                          <?php echo $author; ?>
+                        </li>
+                      <?php endforeach; ?>
+                  </h2>
 
-    <div class="body-content">
+                  <a href="<?= Url::toRoute(['site/view', 'id'=>$book->id]);?>">
+                    <img src="<?= $book->getImage();?>" alt="" width="200">
+                  </a>
+                </div>
+                <div class="entry-content">
+                  <p><?= $book->description?>
+                  </p>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                  <div class="btn-continue-reading text-center text-uppercase">
+                    <a href="<?= Url::toRoute(['site/view', 'id'=>$book->id]);?>" class="more-link">Continue Reading
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <?php endforeach;?>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+              <?php echo LinkPager::widget([
+              'pagination' => $pages,
+              ]); ?>
         </div>
-
+      </div>
     </div>
+  </div>
+
 </div>
